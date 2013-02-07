@@ -37,27 +37,27 @@ void DrawEntity(sf::RenderWindow& renderTarget, const Entity& entity)
             const b2PolygonShape& polygon = dynamic_cast<const b2PolygonShape&>(shape);
             sf::ConvexShape convex(polygon.GetVertexCount());
             for (int i = 0; i < polygon.GetVertexCount(); i++)
-                convex.SetPoint(i, Vec2f(polygon.GetVertex(i)) * scale);
-            convex.SetFillColor(sf::Color(0, 20, 60));
+                convex.setPoint(i, Vec2f(polygon.GetVertex(i)) * scale);
+            convex.setFillColor(sf::Color(0, 20, 60));
 		
-            convex.SetOutlineColor(sf::Color::Cyan);
-            convex.SetOutlineThickness(.8);
-            convex.SetRotation(RadToDeg(entity.GetAngle()));
-            convex.SetPosition(entity.GetPos() * scale);
+            convex.setOutlineColor(sf::Color::Cyan);
+            convex.setOutlineThickness(.8);
+            convex.setRotation(RadToDeg(entity.GetAngle()));
+            convex.setPosition(entity.GetPos() * scale);
             
-            renderTarget.Draw(convex);
+            renderTarget.draw(convex);
         } else if (shape.GetType() == b2Shape::e_circle) {
             const b2CircleShape& pcircle = dynamic_cast<const b2CircleShape&>(shape);
             const float radius = pcircle.m_radius * scale;
             sf::CircleShape scircle(pcircle.m_radius * scale, 70);
-            scircle.SetOrigin(radius, radius);
-            scircle.SetFillColor(sf::Color(0, 20, 60));
-            scircle.SetOutlineColor(sf::Color::Cyan);
-            scircle.SetOutlineThickness(1);
-            scircle.SetRotation(RadToDeg(entity.GetAngle()));
-            scircle.SetPosition(entity.GetPos() * scale);
+            scircle.setOrigin(radius, radius);
+            scircle.setFillColor(sf::Color(0, 20, 60));
+            scircle.setOutlineColor(sf::Color::Cyan);
+            scircle.setOutlineThickness(1);
+            scircle.setRotation(RadToDeg(entity.GetAngle()));
+            scircle.setPosition(entity.GetPos() * scale);
 
-            renderTarget.Draw(scircle);
+            renderTarget.draw(scircle);
         }
     }
 }

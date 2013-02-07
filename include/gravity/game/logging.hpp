@@ -10,7 +10,7 @@
 #ifndef GRAVITY_GAME_LOG_HPP
 #define GRAVITY_GAME_LOG_HPP
 
-#include <boost/log/trivial.hpp>
+//#include <boost/log/trivial.hpp>
 #include <boost/format.hpp>
 
 #define GRAVITY_LOG(loglvl, message) //BOOST_LOG_TRIVIAL(loglvl) << boost::format(message)

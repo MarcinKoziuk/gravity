@@ -42,9 +42,9 @@ int main(int argc, char *argv[])
     GRAVITY_LOG(info, "Client started.");
 
     sf::ContextSettings settings;
-	settings.DepthBits = 0;
-	settings.StencilBits = 8;
-	settings.AntialiasingLevel = 2;
+	settings.depthBits = 0;
+	settings.stencilBits = 8;
+	settings.antialiasingLevel = 2;
 
     sf::RenderWindow window(sf::VideoMode(options.hres, options.vres, options.bitdepth), "Gravity", sf::Style::Default, settings);
     ::Gravity::Game::Game game;
@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
     Rocket::Core::FontDatabase::LoadFontFace("DejaVuSans.ttf");
 
     Rocket::Core::Context *Context = Rocket::Core::CreateContext("default",
-        Rocket::Core::Vector2i(window.GetSize().x, window.GetSize().y));
+        Rocket::Core::Vector2i(window.getSize().x, window.getSize().y));
     
     Rocket::Debugger::Initialise(Context);
     
@@ -97,23 +97,23 @@ int main(int argc, char *argv[])
 
     //Rocket::Core::ElementDocument* document;
 
-    while(window.IsOpen()) {
+    while(window.isOpen()) {
     	sf::Event event;
         Entity* ship = game.GetWorld().GetEntities()[0];
 
-		while (window.PollEvent(event)) {
+		while (window.pollEvent(event)) {
         //window.PollEvent(event);
-			if (event.Type == sf::Event::Closed)
-				window.Close();
+			if (event.type == sf::Event::Closed)
+				window.close();
 
-			if ((event.Type == sf::Event::KeyPressed) && (event.Key.Code == sf::Keyboard::Escape))
+			if ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Escape))
 				return 0;
 
-			if ((event.Type == sf::Event::MouseWheelMoved)) {
-				options.renderscale += event.MouseWheel.Delta*.1f;
+			if ((event.type == sf::Event::MouseWheelMoved)) {
+				options.renderscale += event.mouseWheel.delta*.1f;
 			}
 
-			if ((event.Type == sf::Event::KeyPressed) && (event.Key.Code == sf::Keyboard::Space)) {
+			if ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Space)) {
                 Shape* bombShape = Shape::CreateBombShape();
 				Entity* bomb = new Entity(game.GetWorld(), *bombShape, ship->GetPos() + Vec2f(1, 1));
                 bomb->SetVel(ship->GetVel());
@@ -122,42 +122,42 @@ int main(int argc, char *argv[])
                 
 			}
             
-            switch(event.Type)
+            switch(event.type)
             {
                 case sf::Event::Resized:
                     //rendererInterface.Resize();
                     break;
                 case sf::Event::MouseMoved:
-                    Context->ProcessMouseMove(event.MouseMove.X, event.MouseMove.Y,
+                    Context->ProcessMouseMove(event.mouseMove.x, event.mouseMove.y,
                                               systemInterface.GetKeyModifiers(&window));
                     break;
                 case sf::Event::MouseButtonPressed:
-                    Context->ProcessMouseButtonDown(event.MouseButton.Button,
+                    Context->ProcessMouseButtonDown(event.mouseButton.button,
                             systemInterface.GetKeyModifiers(&window));
                     break;
                 case sf::Event::MouseButtonReleased:
-                    Context->ProcessMouseButtonUp(event.MouseButton.Button,
+                    Context->ProcessMouseButtonUp(event.mouseButton.button,
                             systemInterface.GetKeyModifiers(&window));
                     break;
                 case sf::Event::MouseWheelMoved:
-                    Context->ProcessMouseWheel(event.MouseWheel.Delta,
+                    Context->ProcessMouseWheel(event.mouseWheel.delta,
                                                systemInterface.GetKeyModifiers(&window));
                     break;
                 case sf::Event::TextEntered:
-                    if (event.Text.Unicode > 32)
-                        Context->ProcessTextInput(event.Text.Unicode);
+                    if (event.text.unicode > 32)
+                        Context->ProcessTextInput(event.text.unicode);
                     break;
                 case sf::Event::KeyPressed:
-                    Context->ProcessKeyDown(systemInterface.TranslateKey(event.Key.Code),
+                    Context->ProcessKeyDown(systemInterface.TranslateKey(event.key.code),
                                             systemInterface.GetKeyModifiers(&window));
                     break;
                 case sf::Event::KeyReleased:
-                    if(event.Key.Code == sf::Keyboard::F8)
+                    if(event.key.code == sf::Keyboard::F8)
                     {
                         Rocket::Debugger::SetVisible(!Rocket::Debugger::IsVisible());
                     };
 
-                    Context->ProcessKeyUp(systemInterface.TranslateKey(event.Key.Code),
+                    Context->ProcessKeyUp(systemInterface.TranslateKey(event.key.code),
                                           systemInterface.GetKeyModifiers(&window));
                     break;
                 case sf::Event::Closed:
@@ -166,29 +166,29 @@ int main(int argc, char *argv[])
             };
 		}       
         
-        int rotate = sf::Keyboard::IsKeyPressed(sf::Keyboard::Right) - sf::Keyboard::IsKeyPressed(sf::Keyboard::Left);
-		bool forward = sf::Keyboard::IsKeyPressed(sf::Keyboard::Up);
+        int rotate = sf::Keyboard::isKeyPressed(sf::Keyboard::Right) - sf::Keyboard::isKeyPressed(sf::Keyboard::Left);
+		bool forward = sf::Keyboard::isKeyPressed(sf::Keyboard::Up);
 
 
 
 		sf::View nView(Vec2f(options.hres, options.vres), Vec2f(options.hres, options.vres));
 		camera.Update(ship->GetPos() * options.renderscale);
-		nView.Move(camera.GetPos() - Vec2f(options.hres, options.vres));
+		nView.move(camera.GetPos() - Vec2f(options.hres, options.vres));
 
         ship->Rotate(rotate*2);
 		if (forward)
 			ship->ApplyForce(Vec2f(0.f, 2.f).Rotate(ship->GetAngle()));
 
-        window.Clear();
-        window.SetView(nView);
+        window.clear();
+        window.setView(nView);
         DrawWorld(window, game.GetWorld(), 0.f);
 
-        sf::View viewEmpty = window.GetDefaultView();
-        window.SetView(viewEmpty);
+        sf::View viewEmpty = window.getDefaultView();
+        window.setView(viewEmpty);
         Context->Update();
         Context->Render();
-        window.SetFramerateLimit(60);
-        window.Display();
+        window.setFramerateLimit(60);
+        window.display();
 
         
         game.Step();

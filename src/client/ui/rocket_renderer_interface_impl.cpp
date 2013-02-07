@@ -60,28 +60,28 @@ void RocketRendererInterfaceImpl::RenderGeometry(Rocket::Core::Vertex* vertices,
 	{
 		if(!target)return;
 
-        target->ResetGLStates();
-		target->PushGLStates();
+        target->resetGLStates();
+		target->pushGLStates();
 		glPushMatrix();
 
-        sf::View view = target->GetDefaultView();
+        sf::View view = target->getDefaultView();
 		sf::VertexArray v(sf::Triangles, num_indices);
 		for(int j = 0; j < num_indices; j++){ //iterate indices
 			int i = indices[j]; //i is the vertex position.
-			v[j].Position = sf::Vector2f(vertices[i].position.x, vertices[i].position.y);
-			v[j].Color = sf::Color(vertices[i].colour.red,vertices[i].colour.green,vertices[i].colour.blue, vertices[i].colour.alpha);
+			v[j].position = sf::Vector2f(vertices[i].position.x, vertices[i].position.y);
+			v[j].color = sf::Color(vertices[i].colour.red,vertices[i].colour.green,vertices[i].colour.blue, vertices[i].colour.alpha);
 			if(Image){
-				v[j].TexCoords = sf::Vector2f(vertices[i].tex_coord.x*((sf::Texture*)Image)->GetWidth(), vertices[i].tex_coord.y*((sf::Texture*)Image)->GetHeight());
+				v[j].texCoords = sf::Vector2f(vertices[i].tex_coord.x*((sf::Texture*)Image)->getSize().x, vertices[i].tex_coord.y*((sf::Texture*)Image)->getSize().y);
 			}
 		}
-		states->BlendMode = sf::BlendAlpha;
-		states->Texture = (sf::Texture*)Image;
+		states->blendMode = sf::BlendAlpha;
+		states->texture = (sf::Texture*)Image;
 
-        view.Move(sf::Vector2f(-translation.x, -translation.y));
-        target->SetView(view);
-		target->Draw(v, *states);
+        view.move(sf::Vector2f(-translation.x, -translation.y));
+        target->setView(view);
+		target->draw(v, *states);
 
-		target->PopGLStates();
+		target->popGLStates();
         //target->ResetGLStates();
 }
  
@@ -89,7 +89,7 @@ void RocketRendererInterfaceImpl::RenderGeometry(Rocket::Core::Vertex* vertices,
 Rocket::Core::CompiledGeometryHandle RocketRendererInterfaceImpl::CompileGeometry(Rocket::Core::Vertex* vertices, int num_vertices, int* indices, int num_indices, const Rocket::Core::TextureHandle Image)
 	{	
 		return (Rocket::Core::CompiledGeometryHandle)NULL;
-	};
+	}
 
 	// Called by Rocket when it wants to render application-compiled geometry.		
 	void RocketRendererInterfaceImpl::RenderCompiledGeometry(Rocket::Core::CompiledGeometryHandle geometry, const Rocket::Core::Vector2f& translation)
@@ -121,7 +121,7 @@ Rocket::Core::CompiledGeometryHandle RocketRendererInterfaceImpl::CompileGeometr
 	{
 		sf::Texture *texture = new sf::Texture();
 
-		if(!texture->LoadFromFile(std::string("../data/gui/") + source.CString()))
+		if(!texture->loadFromFile(std::string("../data/gui/") + source.CString()))
 		{
 			delete texture;
 
@@ -129,7 +129,7 @@ Rocket::Core::CompiledGeometryHandle RocketRendererInterfaceImpl::CompileGeometr
 		};
 
 		Image_handle = (Rocket::Core::TextureHandle) texture;
-		Image_dimensions = Rocket::Core::Vector2i(texture->GetWidth(), texture->GetHeight());
+		Image_dimensions = Rocket::Core::Vector2i(texture->getSize().x, texture->getSize().y);
 
 		return true;
 	}
@@ -140,9 +140,9 @@ Rocket::Core::CompiledGeometryHandle RocketRendererInterfaceImpl::CompileGeometr
 		sf::Image *image = new sf::Image();
 		sf::Texture *texture = new sf::Texture();
 
-		image->Create(source_dimensions.x, source_dimensions.y, source);
+		image->create(source_dimensions.x, source_dimensions.y, source);
 
-		texture->LoadFromImage(*image);
+		texture->loadFromImage(*image);
 		Image_handle = (Rocket::Core::TextureHandle)texture;
 
 		return true;

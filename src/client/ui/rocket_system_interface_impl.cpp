@@ -41,20 +41,20 @@ int RocketSystemInterfaceImpl::GetKeyModifiers(sf::Window *Window)
 {
 	int Modifiers = 0;
 
-	if(sf::Keyboard::IsKeyPressed(sf::Keyboard::LShift) ||
-		sf::Keyboard::IsKeyPressed(sf::Keyboard::LShift))
+	if(sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) ||
+		sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
 		Modifiers |= Rocket::Core::Input::KM_SHIFT;
 
-	if(sf::Keyboard::IsKeyPressed(sf::Keyboard::LControl) ||
-		sf::Keyboard::IsKeyPressed(sf::Keyboard::RControl))
+	if(sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) ||
+		sf::Keyboard::isKeyPressed(sf::Keyboard::RControl))
 		Modifiers |= Rocket::Core::Input::KM_CTRL;
 
-	if(sf::Keyboard::IsKeyPressed(sf::Keyboard::LAlt) ||
-		sf::Keyboard::IsKeyPressed(sf::Keyboard::RAlt))
+	if(sf::Keyboard::isKeyPressed(sf::Keyboard::LAlt) ||
+		sf::Keyboard::isKeyPressed(sf::Keyboard::RAlt))
 		Modifiers |= Rocket::Core::Input::KM_ALT;
 
 	return Modifiers;
-};
+}
 
 Rocket::Core::Input::KeyIdentifier RocketSystemInterfaceImpl::TranslateKey(sf::Keyboard::Key Key)
 {
@@ -213,7 +213,7 @@ Rocket::Core::Input::KeyIdentifier RocketSystemInterfaceImpl::TranslateKey(sf::K
 	case sf::Keyboard::Add:
 		return Rocket::Core::Input::KI_ADD;
 		break;
-	case sf::Keyboard::Back:
+	case sf::Keyboard::BackSpace:
 		return Rocket::Core::Input::KI_BACK;
 		break;
 	case sf::Keyboard::Delete:
@@ -312,12 +312,12 @@ Rocket::Core::Input::KeyIdentifier RocketSystemInterfaceImpl::TranslateKey(sf::K
 	};
 
 	return Rocket::Core::Input::KI_UNKNOWN;
-};
+}
 
 float RocketSystemInterfaceImpl::GetElapsedTime()
 {
-	return timer.GetElapsedTime().AsSeconds();
-};
+	return timer.getElapsedTime().asSeconds();
+}
 
 bool RocketSystemInterfaceImpl::LogMessage(Rocket::Core::Log::Type type, const Rocket::Core::String& message)
 {
@@ -347,4 +347,4 @@ bool RocketSystemInterfaceImpl::LogMessage(Rocket::Core::Log::Type type, const R
 	};
 
 	return true;
-};
+}
