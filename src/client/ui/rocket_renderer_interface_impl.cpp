@@ -62,7 +62,7 @@ void RocketRendererInterfaceImpl::RenderGeometry(Rocket::Core::Vertex* vertices,
 
         target->resetGLStates();
 		target->pushGLStates();
-		glPushMatrix();
+		//glPushMatrix();
 
         sf::View view = target->getDefaultView();
 		sf::VertexArray v(sf::Triangles, num_indices);
@@ -82,7 +82,7 @@ void RocketRendererInterfaceImpl::RenderGeometry(Rocket::Core::Vertex* vertices,
 		target->draw(v, *states);
 
 		target->popGLStates();
-        //target->ResetGLStates();
+        //target->resetGLStates();
 }
  
 // Called by Rocket when it wants to compile geometry it believes will be static for the forseeable future.		

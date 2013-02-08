@@ -97,6 +97,10 @@ int main(int argc, char *argv[])
 
     //Rocket::Core::ElementDocument* document;
 
+	std::cout << "OpenGL Version" << window.getSettings().ContextSettings::majorVersion << "." << window.getSettings().ContextSettings::minorVersion << std::endl;
+    sf::ContextSettings settingz = window.getSettings();
+    std::cout << settingz.majorVersion << "." << settingz.minorVersion << std::endl;
+
     while(window.isOpen()) {
     	sf::Event event;
         Entity* ship = game.GetWorld().GetEntities()[0];
