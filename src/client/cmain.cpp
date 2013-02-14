@@ -13,6 +13,7 @@
 #include <SFML/Graphics.hpp>
 
 #include <Rocket/Core.h>
+#include <Rocket/Controls.h>
 #include <Rocket/Debugger.h>
 
 #include <gravity/client/options.hpp>
@@ -35,7 +36,6 @@ using namespace Gravity::Game;
 
 int main(int argc, char *argv[])
 {
-	InitializeLogging();
     Options& options = Options::GetInstance();
     options.LoadFromCommandLine(argc, argv);
 
@@ -70,6 +70,8 @@ int main(int argc, char *argv[])
     if(!Rocket::Core::Initialise())
         return 0;
 
+	Rocket::Controls::Initialise();
+
     Rocket::Core::FontDatabase::LoadFontFace("Delicious-Bold.otf");
     Rocket::Core::FontDatabase::LoadFontFace("Delicious-BoldItalic.otf");
     Rocket::Core::FontDatabase::LoadFontFace("Delicious-Italic.otf");
@@ -83,6 +85,7 @@ int main(int argc, char *argv[])
         Rocket::Core::Vector2i(window.getSize().x, window.getSize().y));
     
     Rocket::Debugger::Initialise(Context);
+	//Rocket::Debugger::SetVisible(true);
     
     Rocket::Core::ElementDocument *document = Context->LoadDocument("my.rml");
 

@@ -45,7 +45,6 @@ RocketShellInterfaceImpl::~RocketShellInterfaceImpl()
 // Opens a file.
 Rocket::Core::FileHandle RocketShellInterfaceImpl::Open(const Rocket::Core::String& path)
 {
-    fprintf(stderr, "OPENEN MAAR!!! %s\n" , path.CString());
 	// Attempt to open the file relative to the application's root.
 	FILE* fp = std::fopen((root + path).CString(), "rb");
 	if (fp != NULL)

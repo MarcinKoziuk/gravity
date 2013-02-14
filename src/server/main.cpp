@@ -17,7 +17,6 @@ using namespace Gravity;
 
 int main(int argc, char *argv[])
 {
-    Game::InitializeLogging();
     GRAVITY_LOG(info, "Server started.");
 	return 0;
 }

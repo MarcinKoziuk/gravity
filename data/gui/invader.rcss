@@ -491,13 +491,13 @@ scrollbarvertical sliderarrowdec
 scrollbarvertical sliderarrowdec:hover,
 scrollbarvertical sliderarrowinc:hover
 {
-	icon-image-t: 177px 201px;
+	//icon-image-t: 177px 201px;
 }
 
 scrollbarvertical sliderarrowdec:active,
 scrollbarvertical sliderarrowinc:active
 {
-	icon-image-t: 202px 226px;
+	//icon-image-t: 202px 226px;
 }
 
 scrollbarvertical sliderarrowinc

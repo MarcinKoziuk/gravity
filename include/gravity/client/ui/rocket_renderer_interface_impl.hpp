@@ -50,7 +50,6 @@ public:
     /// Destructs the renderer
     ~RocketRendererInterfaceImpl();
 
-
     //temp
     sf::RenderTarget *target;
     sf::RenderStates *states;

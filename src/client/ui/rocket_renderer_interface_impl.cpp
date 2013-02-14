@@ -55,105 +55,107 @@ RocketRendererInterfaceImpl::RocketRendererInterfaceImpl()
 
 RocketRendererInterfaceImpl::~RocketRendererInterfaceImpl()
 {}
+
 // Called by Rocket when it wants to render geometry that it does not wish to optimise.
 void RocketRendererInterfaceImpl::RenderGeometry(Rocket::Core::Vertex* vertices, int num_vertices, int* indices, int num_indices, const Rocket::Core::TextureHandle Image, const Rocket::Core::Vector2f& translation)
-	{
-		if(!target)return;
+{
+	if(!target)
+		return;
 
-        target->resetGLStates();
-		target->pushGLStates();
-		//glPushMatrix();
+    target->resetGLStates();
+	target->pushGLStates();
+	//glPushMatrix();
 
-        sf::View view = target->getDefaultView();
-		sf::VertexArray v(sf::Triangles, num_indices);
-		for(int j = 0; j < num_indices; j++){ //iterate indices
-			int i = indices[j]; //i is the vertex position.
-			v[j].position = sf::Vector2f(vertices[i].position.x, vertices[i].position.y);
-			v[j].color = sf::Color(vertices[i].colour.red,vertices[i].colour.green,vertices[i].colour.blue, vertices[i].colour.alpha);
-			if(Image){
-				v[j].texCoords = sf::Vector2f(vertices[i].tex_coord.x*((sf::Texture*)Image)->getSize().x, vertices[i].tex_coord.y*((sf::Texture*)Image)->getSize().y);
-			}
+    sf::View view = target->getDefaultView();
+	sf::VertexArray v(sf::Triangles, num_indices);
+	for(int j = 0; j < num_indices; j++){ //iterate indices
+		int i = indices[j]; //i is the vertex position.
+		v[j].position = sf::Vector2f(vertices[i].position.x, vertices[i].position.y);
+		v[j].color = sf::Color(vertices[i].colour.red,vertices[i].colour.green,vertices[i].colour.blue, vertices[i].colour.alpha);
+		if(Image){
+			v[j].texCoords = sf::Vector2f(vertices[i].tex_coord.x*((sf::Texture*)Image)->getSize().x, vertices[i].tex_coord.y*((sf::Texture*)Image)->getSize().y);
 		}
-		states->blendMode = sf::BlendAlpha;
-		states->texture = (sf::Texture*)Image;
+	}
 
-        view.move(sf::Vector2f(-translation.x, -translation.y));
-        target->setView(view);
-		target->draw(v, *states);
+	states->blendMode = sf::BlendAlpha;
+	states->texture = (sf::Texture*)Image;
 
-		target->popGLStates();
-        //target->resetGLStates();
+    view.move(sf::Vector2f(-translation.x, -translation.y));
+    target->setView(view);
+	target->draw(v, *states);
+
+	target->popGLStates();
+    //target->resetGLStates();
 }
  
 // Called by Rocket when it wants to compile geometry it believes will be static for the forseeable future.		
 Rocket::Core::CompiledGeometryHandle RocketRendererInterfaceImpl::CompileGeometry(Rocket::Core::Vertex* vertices, int num_vertices, int* indices, int num_indices, const Rocket::Core::TextureHandle Image)
-	{	
-		return (Rocket::Core::CompiledGeometryHandle)NULL;
-	}
+{
+	return (Rocket::Core::CompiledGeometryHandle)NULL;
+}
 
-	// Called by Rocket when it wants to render application-compiled geometry.		
-	void RocketRendererInterfaceImpl::RenderCompiledGeometry(Rocket::Core::CompiledGeometryHandle geometry, const Rocket::Core::Vector2f& translation)
+// Called by Rocket when it wants to render application-compiled geometry.		
+void RocketRendererInterfaceImpl::RenderCompiledGeometry(Rocket::Core::CompiledGeometryHandle geometry, const Rocket::Core::Vector2f& translation)
+{
+}
+
+// Called by Rocket when it wants to release application-compiled geometry.		
+void RocketRendererInterfaceImpl::ReleaseCompiledGeometry(Rocket::Core::CompiledGeometryHandle geometry)
+{
+}
+
+// Called by Rocket when it wants to enable or disable scissoring to clip content.		
+void RocketRendererInterfaceImpl::EnableScissorRegion(bool enable)
+{
+	if (enable)
+		glEnable(GL_SCISSOR_TEST);
+	else
+		glDisable(GL_SCISSOR_TEST);
+}
+
+// Called by Rocket when it wants to change the scissor region.
+void RocketRendererInterfaceImpl::SetScissorRegion(int x, int y, int width, int height)
+{
+	glScissor(x, target->getSize().y - (y + height), width, height);
+}
+
+// Called by Rocket when a Image is required by the library.		
+bool RocketRendererInterfaceImpl::LoadTexture(Rocket::Core::TextureHandle& Image_handle, Rocket::Core::Vector2i& Image_dimensions, const Rocket::Core::String& source)
+{
+	sf::Texture *texture = new sf::Texture();
+
+	if(!texture->loadFromFile(std::string("../data/gui/") + source.CString()))
 	{
-	}
+		delete texture;
 
-	// Called by Rocket when it wants to release application-compiled geometry.		
-	void RocketRendererInterfaceImpl::ReleaseCompiledGeometry(Rocket::Core::CompiledGeometryHandle geometry)
-	{
-	}
+		return false;
+	};
 
-	// Called by Rocket when it wants to enable or disable scissoring to clip content.		
-	void RocketRendererInterfaceImpl::EnableScissorRegion(bool enable)
-	{
-		if (enable)
-			glEnable(GL_SCISSOR_TEST);
-		else
-			glDisable(GL_SCISSOR_TEST);
-	}
+	Image_handle = (Rocket::Core::TextureHandle) texture;
+	Image_dimensions = Rocket::Core::Vector2i(texture->getSize().x, texture->getSize().y);
 
-	// Called by Rocket when it wants to change the scissor region.
-	void RocketRendererInterfaceImpl::SetScissorRegion(int x, int y, int width, int height)
-	{
-		glScissor(x, 768 - (y + height), width, height);
-	}
+	return true;
+}
 
-	// Called by Rocket when a Image is required by the library.		
-	bool RocketRendererInterfaceImpl::LoadTexture(Rocket::Core::TextureHandle& Image_handle, Rocket::Core::Vector2i& Image_dimensions, const Rocket::Core::String& source)
-	{
-		sf::Texture *texture = new sf::Texture();
+// Called by Rocket when a Image is required to be built from an internally-generated sequence of pixels.
+bool RocketRendererInterfaceImpl::GenerateTexture(Rocket::Core::TextureHandle& Image_handle, const Rocket::Core::byte* source, const Rocket::Core::Vector2i& source_dimensions)
+{
+	sf::Image *image = new sf::Image();
+	sf::Texture *texture = new sf::Texture();
 
-		if(!texture->loadFromFile(std::string("../data/gui/") + source.CString()))
-		{
-			delete texture;
+	image->create(source_dimensions.x, source_dimensions.y, source);
 
-			return false;
-		};
+	texture->loadFromImage(*image);
+	Image_handle = (Rocket::Core::TextureHandle)texture;
 
-		Image_handle = (Rocket::Core::TextureHandle) texture;
-		Image_dimensions = Rocket::Core::Vector2i(texture->getSize().x, texture->getSize().y);
+	return true;
+}
 
-		return true;
-	}
-
-	// Called by Rocket when a Image is required to be built from an internally-generated sequence of pixels.
-	bool RocketRendererInterfaceImpl::GenerateTexture(Rocket::Core::TextureHandle& Image_handle, const Rocket::Core::byte* source, const Rocket::Core::Vector2i& source_dimensions)
-	{
-		sf::Image *image = new sf::Image();
-		sf::Texture *texture = new sf::Texture();
-
-		image->create(source_dimensions.x, source_dimensions.y, source);
-
-		texture->loadFromImage(*image);
-		Image_handle = (Rocket::Core::TextureHandle)texture;
-
-		return true;
-	}
-
-	// Called by Rocket when a loaded Image is no longer required.		
-	void RocketRendererInterfaceImpl::ReleaseTexture(Rocket::Core::TextureHandle Image_handle)
-	{
-		delete (sf::Texture*)Image_handle;
-	}
-
+// Called by Rocket when a loaded Image is no longer required.		
+void RocketRendererInterfaceImpl::ReleaseTexture(Rocket::Core::TextureHandle Image_handle)
+{
+	delete (sf::Texture*)Image_handle;
+}
 
 
 

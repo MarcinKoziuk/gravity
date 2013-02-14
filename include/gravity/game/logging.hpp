@@ -10,13 +10,32 @@
 #ifndef GRAVITY_GAME_LOG_HPP
 #define GRAVITY_GAME_LOG_HPP
 
-//#include <boost/log/trivial.hpp>
+#include <ostream>
+
 #include <boost/format.hpp>
 
-#define GRAVITY_LOG(loglvl, message) //BOOST_LOG_TRIVIAL(loglvl) << boost::format(message)
+#define GRAVITY_LOG(loglvl, message) Gravity::Game::Logger::getLogger().createStream(Gravity::Game::Logger::loglvl) << boost::format(message) << "\n"
 
 namespace Gravity {
 namespace Game {
+
+class Logger {
+public:
+	enum Level {
+		debug,
+		info,
+		message,
+		warning,
+		error,
+		fatal
+	};
+
+	static const char* LEVEL_STRINGS[];
+
+	static Logger getLogger();
+
+	std::ostream& createStream(Level loglvl);
+};
 
 void InitializeLogging();
 

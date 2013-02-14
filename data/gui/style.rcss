@@ -13,9 +13,9 @@ body.window
     /*padding-bottom: 20px;*/
     
     /*min-width: 250px;
-    max-width: 800px;
+    max-width: 800px;*/
     
-    min-height: 135px;
+	/*min-height: 135px;
     max-height: 700px;*/
 }
 
@@ -28,11 +28,18 @@ div#title_bar
     position: absolute;
     top: 0px;
     left: 0px;
+	margin: 0px;
+	padding: 2px 0px;
     
     text-align: center;
+
+	background-decorator: tiled-horizontal;
+    background-left-image: spacer2.tga 99px 0px 109px 20px;
+	background-center-image: spacer2.tga stretch 109px 0px 189px 20px;
+	background-right-image: spacer2.tga 189px 0px 199px 20px;
 }
 
-div#title_bar div#icon
+/*div#title_bar div#icon
 {
     position: absolute;
     left: 20px;
@@ -43,7 +50,7 @@ div#title_bar div#icon
     
     icon-decorator: image;
     icon-image-src: invader.tga;
-}
+}*/
 
 div#title_bar span
 {
@@ -57,7 +64,7 @@ div#title_bar span
 
     /*outline-font-effect: outline;
     outline-width: 1px;
-    outline-color: black;*
+    outline-color: black;*/
 
     /*background-decorator: tiled-horizontal;
     background-left-image: invader.tga 147px 0px 229px 85px;
@@ -65,16 +72,15 @@ div#title_bar span
     background-right-image: invader.tga 231px 0px 246px 85px;*/
 }
 
-
-
 div#window
 {
     width: auto;
+    padding-top: 30px;
     padding-left: 15px;
-    padding-right: 15px;
+    padding-right: 30px;
     padding-bottom: 0px;
-    padding-top: 25px;
 
+/*
     background-decorator: tiled-box;
     background-top-left-image:      spacer.tga          195px 0px  205px 10px;
     background-top-right-image:     spacer.tga          390px 0px  401px 10px;
@@ -84,7 +90,19 @@ div#window
     background-bottom-image:        spacer.tga stretch  205px 90px 390px 101px;
     background-left-image:          spacer.tga stretch  195px 10px 205px 90px;
     background-right-image:         spacer.tga stretch  390px 10px 401px 90px;
-    background-center-image:        spacer.tga stretch  205px 10px 390px 90px;
+    background-center-image:        spacer.tga stretch  205px 10px 390px 90px;*/
+	/*background-color: grey;*/
+
+	background-decorator: tiled-box;
+	background-top-left-image:		spacer2.tga			0px   0px  10px  10px;
+	background-top-right-image:		spacer2.tga			87px  0px  97px  10px;
+	background-top-image:           spacer2.tga stretch 10px  0px  87px  10px;
+	background-bottom-left-image:   spacer2.tga         0px   87px 10px  97px;
+	background-bottom-right-image:  spacer2.tga         87px  87px 97px  97px;
+	background-bottom-image:        spacer2.tga stretch 10px  87px 87px  97px;
+	background-left-image:          spacer2.tga         0px   10px 10px  87px;
+	background-right-image:         spacer2.tga         87px  10px 97px  87px;
+	background-center-image:        spacer2.tga         10px  10px 87px  87px;
 }
 
 div#content
@@ -441,76 +459,75 @@ datagridexpand.collapsed
 scrollbarvertical
 {
     margin-top: -6px;
-    margin-bottom: -6px;
-    margin-right: -11px;
-    width: 27px;
+    margin-right: -30px;
+    width: 20px;
 }
 
 scrollbarvertical slidertrack
 {
-    background-decorator: tiled-vertical;
-    background-top-image: invader.tga 70px 199px 97px 201px;
-    background-center-image: invader.tga stretch 70px 201px 97px 202px;
-    background-bottom-image: invader.tga 70px 203px 97px 204px;
+    /*background-decorator: tiled-vertical;
+	
+	background-top-image:    spacer2.tga         240px  0px 259px 10px;
+	background-center-image: spacer2.tga stretch 240px 10px 259px 92px;
+	background-bottom-image: spacer2.tga         240px 92px 259px 102px;*/
+	background: #333;
 }
 
 scrollbarvertical sliderbar
 {
-    margin-left: 4px;
-    width: 23px;
+    /*margin-left: 4px;*/
+    width: 20px;
     min-height: 46px;
 
     background-decorator: tiled-vertical;
-    background-top-image: invader.tga 56px 152px 79px 175px;
-    background-center-image: invader.tga stretch 56px 175px 79px 175px;
-    background-bottom-image: invader.tga 56px 176px 79px 198px;
+	background-top-image:    spacer2.tga         240px  0px 260px 11px;
+	background-center-image: spacer2.tga stretch 240px 10px 260px 93px;
+	background-bottom-image: spacer2.tga         240px 92px 260px 103px;
 }
 
 scrollbarvertical sliderbar:hover
 {
-    background-top-image-s: 80px 103px;
-    background-center-image-s: 80px 103px;
-    background-bottom-image-s: 80px 103px;
+    background-top-image-s: 200px 220px;
+    background-center-image-s: 200px 220px;
+    background-bottom-image-s: 200px 220px;
 }
 
 scrollbarvertical sliderbar:active
 {
-    background-top-image-s: 104px 127px;
-    background-center-image-s: 104px 127px;
-    background-bottom-image-s: 104px 127px;
+    background-top-image-s: 220px 240px;
+    background-center-image-s: 220px 240px;
+    background-bottom-image-s: 220px 240px;
 }
 
 scrollbarvertical sliderarrowdec
 {
-    width: 27px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
     
     icon-decorator: image;
-    icon-image: invader.tga 0px 152px 27px 176px;
+    icon-image: spacer2.tga 240px 103px 260px 123px;
 }
 
 scrollbarvertical sliderarrowdec:hover,
 scrollbarvertical sliderarrowinc:hover
 {
-    icon-image-t: 177px 201px;
+    icon-image-s: 200px 220px;
 }
 
 scrollbarvertical sliderarrowdec:active,
 scrollbarvertical sliderarrowinc:active
 {
-    icon-image-t: 202px 226px;
+    icon-image-s: 220px 240px;
 }
 
 scrollbarvertical sliderarrowinc
 {
-    width: 27px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
     
     icon-decorator: image;
-    icon-image: invader.tga 28px 152px 55px 176px;
+    icon-image: spacer2.tga 240px 123px 260px 143px;
 }
-
-
 
 scrollbarhorizontal
 {

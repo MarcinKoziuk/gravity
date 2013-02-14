@@ -1,46 +1,42 @@
 <rml>
 	<head>
-		<title>MyDemo</title>
-		<link type="text/template" href="window_.rml" />
-        <style>
-            body
-            {
-                width: 400px;
-                height: 325px;
-
-                margin: auto;
-            }
-
-            div#title_bar div#icon
-            {
-                display: none;
-            }
-
-            div#content
-            {
-                text-align: left;
-            }
-        </style> 
+		<title>Demo</title>
+		<link type="text/template" href="window.rml" />
+		<style>
+			body
+			{
+				width: 300px;
+				height: 225px;
+				
+				margin: auto;
+			}
+			
+			div#title_bar div#icon
+			{
+				display: none;
+			}
+			
+			div#content
+			{
+				text-align: left;
+			}
+		</style>
 	</head>
 	<body template="window">
-		This is a sample.
-        <br/>      
-        <button>Ze butt!</button>
-        <button>OK</button>
-        This is a sample. This is a sample. This is a sample. This is a sample. This is a sample. This is a sample. 
-                This is a sample. This is a sample. This is a sample. This is a sample. This is a sample. This is a sample. 
-               This is a sample. This is a sample. This is a sample. This is a sample. This is a sample. This is a sample. 
-               This is a sample. This is a sample. This is a sample. This is a sample. This is a sample. This is a sample. 
-               This is a sample. This is a sample. This is a sample. This is a sample. This is a sample. This is a sample. 
-               This is a sample. This is a sample. This is a sample. This is a sample. This is a sample. This is a sample. 
-               This is a sample. This is a sample. This is a sample. This is a sample. This is a sample. This is a sample. 
-               This is a sample. This is a sample. This is a sample. This is a sample. This is a sample. This is a sample. 
-               This is a sample. This is a sample. This is a sample. This is a sample. This is a sample. This is a sample. 
-               This is a sample. This is a sample. This is a sample. This is a sample. This is a sample. This is a sample. 
-               This is a sample. This is a sample. This is a sample. This is a sample. This is a sample. This is a sample. 
-               This is a sample. This is a sample. This is a sample. This is a sample. This is a sample. This is a sample. 
-               This is a sample. This is a sample. This is a sample. This is a sample. This is a sample. This is a sample. 
-               This is a sample. This is a sample. This is a sample. This is a sample. This is a sample. This is a sample. 
-       
+		This is a sample.This is a sample.
+		<form>
+			<input type='text' />
+			<select name="graphics">
+				<option value="bad">Bad</option>
+				<option value="ok">OK</option>
+				<option value="good" selected>good</option>
+			</select>
+		
+			<button>Test</button>
+			<input type="button">Test 2</input>
+			<br />
+			
+
+		</form>
 	</body>
 </rml>

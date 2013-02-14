@@ -5,12 +5,13 @@
 </head>
 <body class="window">
 	<div id="window">
-        <div id="title_bar">
-            <handle move_target="#document">
-                <div id="icon"></div>
-                <span id="title">Title</span>
-            </handle>
-        </div>
+		<handle move_target="#document">
+			<div id="title_bar">
+				<div id="icon"></div>
+				<span id="title">Title</span>
+			</div>
+		</handle>
+
 		<div id="content">
 		</div>
 	</div>
