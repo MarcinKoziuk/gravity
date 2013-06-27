@@ -38,15 +38,17 @@ int main(int argc, char *argv[])
 {
     Options& options = Options::GetInstance();
     options.LoadFromCommandLine(argc, argv);
+	options.LoadFromIniFile("gravity.ini");
 
     GRAVITY_LOG(info, "Client started.");
 
     sf::ContextSettings settings;
 	settings.depthBits = 0;
 	settings.stencilBits = 8;
-	settings.antialiasingLevel = 2;
+	settings.antialiasingLevel = options.msaa;
+	int style = options.fullscreen ? sf::Style::Fullscreen : sf::Style::Default;
 
-    sf::RenderWindow window(sf::VideoMode(options.hres, options.vres, options.bitdepth), "Gravity", sf::Style::Default, settings);
+    sf::RenderWindow window(sf::VideoMode(options.hres, options.vres, options.bitdepth), "Gravity", style, settings);
     ::Gravity::Game::Game game;
 	
     game.Start();

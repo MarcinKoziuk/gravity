@@ -11,6 +11,7 @@
 #define GRAVITY_CLIENT_OPTIONS_HPP
 
 #include <istream>
+#include <string>
 
 #include <boost/utility.hpp>
 #include <boost/thread/mutex.hpp>
@@ -41,6 +42,7 @@ public:
     static Options& GetInstance();
     void LoadFromCommandLine(int argc, char *argv[]);
     void LoadFromIniFile(std::istream& input);
+	void LoadFromIniFile(const std::string& filename);
 }; 
 
 } // namespace Client

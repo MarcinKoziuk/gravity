@@ -9,6 +9,7 @@
 
 #include <cstdlib>
 #include <iostream>
+#include <fstream>
 
 #include <gravity/gravity.hpp>
 
@@ -121,9 +122,15 @@ void Options::LoadFromIniFile(std::istream& input)
 		("Screen.bitdepth",         bitdepth)
 		("Screen.msaa-level",       msaa)
 		("Screen.circle-detail",    circleDetail)
-		("Draw.fullscreen",         fullscreen)
+		("Screen.fullscreen",       fullscreen)
 		("Draw.wireframe",          wireframe)
 		("Draw.renderscale",        renderscale);
+}
+
+void Options::LoadFromIniFile(const std::string& filename)
+{
+	std::ifstream file(filename);
+	LoadFromIniFile(file);
 }
 
 Options& Options::GetInstance()
